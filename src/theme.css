@@ -173,6 +173,22 @@ body.dark .weather-details-grid .weather-detail-value {
   color: #ffffff !important;
 }
 
+/* Chart styles for dark mode */
+body.dark canvas {
+  filter: brightness(0.9);
+}
+
+/* Ensure chart text is visible in dark mode */
+body.dark .chartjs-render-monitor {
+  background: transparent !important;
+}
+
+/* Chart container in dark mode */
+body.dark ion-card canvas {
+  background: rgba(30, 30, 30, 0.5) !important;
+  border-radius: 8px;
+}
+
 /* Fix loading component text in dark mode */
 body.dark ion-loading {
   --color: #ffffff !important;

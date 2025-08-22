@@ -13,9 +13,10 @@ import {
 } from '@ionic/react';
 import { search, thermometer, water, location, sunny, rainy, cloudy, snow, thunderstorm, partlySunny, eye, speedometer, navigate } from 'ionicons/icons';
 import { WeatherService } from '../services/weatherService';
-import { WeatherData, ForecastData } from '../types/weather';
+import { WeatherData, ForecastData, HourlyForecastData } from '../types/weather';
 import ForecastCard from './ForecastCard';
 import RecentSearches from './RecentSearches';
+import HourlyChart from './HourlyChart';
 import { Geolocation } from '@capacitor/geolocation';
 import { Capacitor } from '@capacitor/core';
 
@@ -23,6 +24,7 @@ const WeatherCard: React.FC = () => {
   const [city, setCity] = useState<string>('');
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [forecastData, setForecastData] = useState<ForecastData | null>(null);
+  const [hourlyData, setHourlyData] = useState<HourlyForecastData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [showToast, setShowToast] = useState<boolean>(false);
@@ -72,14 +74,17 @@ const WeatherCard: React.FC = () => {
     setError('');
     setWeatherData(null);
     setForecastData(null);
+    setHourlyData(null);
 
     try {
-      const [weatherData, forecastData] = await Promise.all([
+      const [weatherData, forecastData, hourlyData] = await Promise.all([
         WeatherService.getWeatherByCity(city),
-        WeatherService.getForecastByCity(city)
+        WeatherService.getForecastByCity(city),
+        WeatherService.getHourlyForecastByCity(city)
       ]);
       setWeatherData(weatherData);
       setForecastData(forecastData);
+      setHourlyData(hourlyData);
       addToRecentSearches(city);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error desconocido');
@@ -147,10 +152,14 @@ const WeatherCard: React.FC = () => {
       setCity(data.name);
       addToRecentSearches(data.name);
       
-      // Get forecast for the located city
+      // Get forecast and hourly data for the located city
       try {
-        const forecast = await WeatherService.getForecastByCity(data.name);
+        const [forecast, hourlyForecast] = await Promise.all([
+          WeatherService.getForecastByCity(data.name),
+          WeatherService.getHourlyForecastByCity(data.name)
+        ]);
         setForecastData(forecast);
+        setHourlyData(hourlyForecast);
       } catch (forecastErr) {
         console.warn('Could not get forecast for current location');
       }
@@ -191,14 +200,17 @@ const WeatherCard: React.FC = () => {
     setError('');
     setWeatherData(null);
     setForecastData(null);
+    setHourlyData(null);
 
     try {
-      const [weatherData, forecastData] = await Promise.all([
+      const [weatherData, forecastData, hourlyData] = await Promise.all([
         WeatherService.getWeatherByCity(cityName),
-        WeatherService.getForecastByCity(cityName)
+        WeatherService.getForecastByCity(cityName),
+        WeatherService.getHourlyForecastByCity(cityName)
       ]);
       setWeatherData(weatherData);
       setForecastData(forecastData);
+      setHourlyData(hourlyData);
       addToRecentSearches(cityName);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error desconocido');
@@ -317,6 +329,8 @@ const WeatherCard: React.FC = () => {
           </IonCardContent>
         </IonCard>
       )}
+
+      <HourlyChart hourlyData={hourlyData} />
 
       <ForecastCard forecastData={forecastData} />
 
