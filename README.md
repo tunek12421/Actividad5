@@ -12,7 +12,7 @@ Desarrollar una aplicación que se conecte a una API externa pública, realice p
 **[Probar en navegador](https://actividad5-opal.vercel.app/)**
 
 ### Android APK
-**[Descargar APK](https://github.com/tunek12421/Actividad5/actions/runs/17156354665/artifacts/3828527552)**
+**[Descargar APK](https://github.com/tunek12421/Actividad5/actions/runs/17160369583/artifacts/3830059128)**
 
 #### Instalación en Android:
 1. Descargar el archivo ZIP desde el enlace
