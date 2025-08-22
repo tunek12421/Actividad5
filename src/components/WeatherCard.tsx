@@ -17,6 +17,7 @@ import { WeatherData, ForecastData } from '../types/weather';
 import ForecastCard from './ForecastCard';
 import RecentSearches from './RecentSearches';
 import { Geolocation } from '@capacitor/geolocation';
+import { Capacitor } from '@capacitor/core';
 
 const WeatherCard: React.FC = () => {
   const [city, setCity] = useState<string>('');
@@ -94,26 +95,53 @@ const WeatherCard: React.FC = () => {
     setWeatherData(null);
 
     try {
-      // Check permissions first
-      const permissions = await Geolocation.checkPermissions();
-      
-      if (permissions.location !== 'granted') {
-        const requestPermissions = await Geolocation.requestPermissions();
-        if (requestPermissions.location !== 'granted') {
-          setError('Se requieren permisos de ubicación para esta función');
+      let latitude: number;
+      let longitude: number;
+
+      // Check if we're running on a native platform
+      if (Capacitor.isNativePlatform()) {
+        // Use Capacitor Geolocation for native platforms
+        const permissions = await Geolocation.checkPermissions();
+        
+        if (permissions.location !== 'granted') {
+          const requestPermissions = await Geolocation.requestPermissions();
+          if (requestPermissions.location !== 'granted') {
+            setError('Se requieren permisos de ubicación para esta función');
+            setShowToast(true);
+            setGeoLoading(false);
+            return;
+          }
+        }
+
+        const position = await Geolocation.getCurrentPosition({
+          enableHighAccuracy: true,
+          timeout: 10000,
+        });
+
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+      } else {
+        // Use browser geolocation API for web
+        if (!navigator.geolocation) {
+          setError('Geolocalización no disponible en este navegador');
           setShowToast(true);
           setGeoLoading(false);
           return;
         }
+
+        const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 60000
+          });
+        });
+
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
       }
 
-      // Get current position using Capacitor Geolocation
-      const position = await Geolocation.getCurrentPosition({
-        enableHighAccuracy: true,
-        timeout: 10000,
-      });
-
-      const { latitude, longitude } = position.coords;
+      // Get weather data using coordinates
       const data = await WeatherService.getWeatherByCoords(latitude, longitude);
       setWeatherData(data);
       setCity(data.name);
@@ -128,7 +156,24 @@ const WeatherCard: React.FC = () => {
       }
     } catch (err) {
       console.error('Geolocation error:', err);
-      setError('Error al obtener la ubicación. Verifica que el GPS esté activado.');
+      if (err instanceof GeolocationPositionError) {
+        switch (err.code) {
+          case err.PERMISSION_DENIED:
+            setError('Permisos de ubicación denegados. Permite el acceso a la ubicación.');
+            break;
+          case err.POSITION_UNAVAILABLE:
+            setError('Ubicación no disponible. Verifica que el GPS esté activado.');
+            break;
+          case err.TIMEOUT:
+            setError('Tiempo de espera agotado. Intenta de nuevo.');
+            break;
+          default:
+            setError('Error al obtener la ubicación.');
+            break;
+        }
+      } else {
+        setError('Error al obtener la ubicación. Verifica que el GPS esté activado.');
+      }
       setShowToast(true);
     } finally {
       setGeoLoading(false);
