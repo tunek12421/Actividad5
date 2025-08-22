@@ -1,0 +1,41 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Capacitor
+.capacitor/
+
+# Ionic
+www/
+
+# Android
+android/app/build/
+android/.gradle/
+android/local.properties
+
+# Temporary files
+*.tmp
+*.temp

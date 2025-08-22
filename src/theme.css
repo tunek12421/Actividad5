@@ -1,0 +1,231 @@
+/* Light theme variables */
+:root {
+  --background: #ffffff;
+  --background-secondary: #f8f9fa;
+  --text-primary: #000000;
+  --text-secondary: #666666;
+  --card-background: #ffffff;
+  --border-color: #e0e0e0;
+}
+
+/* Dark theme variables */
+body.dark {
+  --background: #121212;
+  --background-secondary: #2a2a2a;
+  --text-primary: #ffffff;
+  --text-secondary: #e0e0e0;
+  --card-background: #1f1f1f;
+  --border-color: #404040;
+}
+
+/* Apply theme variables */
+ion-app {
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+ion-content {
+  --background: var(--background);
+  --color: var(--text-primary);
+}
+
+ion-card {
+  --background: var(--card-background);
+  --color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+ion-toolbar {
+  --background: var(--card-background);
+  --color: var(--text-primary);
+  --border-color: var(--border-color);
+}
+
+ion-item {
+  --background: transparent;
+  --color: var(--text-primary);
+  --border-color: var(--border-color);
+}
+
+ion-input {
+  --color: var(--text-primary);
+  --placeholder-color: var(--text-secondary);
+}
+
+ion-chip {
+  --background: var(--background-secondary);
+  --color: var(--text-primary);
+}
+
+/* Smooth transitions for theme changes */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Improve card appearance in dark mode */
+body.dark ion-card {
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+  --background: #1f1f1f;
+  --color: #ffffff;
+}
+
+/* Button styles */
+ion-button {
+  --color: var(--text-primary);
+}
+
+/* Force text colors in dark mode */
+body.dark {
+  color: #ffffff !important;
+}
+
+body.dark ion-card-title {
+  color: #ffffff !important;
+}
+
+body.dark ion-card-content {
+  color: #ffffff !important;
+}
+
+body.dark ion-item {
+  --color: #ffffff !important;
+}
+
+body.dark ion-label {
+  color: #ffffff !important;
+}
+
+body.dark ion-chip ion-label {
+  color: #ffffff !important;
+}
+
+/* Weather card specific styles */
+.weather-details-grid {
+  background: var(--background-secondary);
+  border-radius: 8px;
+}
+
+.forecast-item {
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Fix input text in dark mode */
+body.dark ion-input {
+  --color: #ffffff !important;
+  --placeholder-color: #b3b3b3 !important;
+}
+
+/* Fix description text in weather cards */
+body.dark .weather-description {
+  color: #e0e0e0 !important;
+}
+
+body.dark .weather-detail-label {
+  color: #b3b3b3 !important;
+}
+
+body.dark .weather-detail-value {
+  color: #ffffff !important;
+}
+
+/* Ensure all text in dark mode is visible */
+body.dark * {
+  color: inherit;
+}
+
+body.dark div {
+  color: #ffffff;
+}
+
+/* Override Ionic default colors in dark mode */
+body.dark ion-card-header {
+  color: #ffffff !important;
+}
+
+body.dark ion-card-content * {
+  color: #ffffff !important;
+}
+
+/* Ensure temperatures and weather data are visible */
+body.dark .weather-detail-label {
+  color: #b3b3b3 !important;
+}
+
+body.dark .weather-description {
+  color: #e0e0e0 !important;
+}
+
+/* Make weather details grid more visible */
+body.dark .weather-details-grid {
+  background: #2a2a2a !important;
+  color: #ffffff !important;
+}
+
+body.dark .weather-details-grid * {
+  color: inherit !important;
+}
+
+body.dark .weather-details-grid .weather-detail-label {
+  color: #b3b3b3 !important;
+}
+
+body.dark .weather-details-grid .weather-detail-value {
+  color: #ffffff !important;
+}
+
+/* Fix loading component text in dark mode */
+body.dark ion-loading {
+  --color: #ffffff !important;
+  --background: rgba(0, 0, 0, 0.8) !important;
+}
+
+body.dark .loading-wrapper {
+  --color: #ffffff !important;
+  color: #ffffff !important;
+}
+
+body.dark .loading-content {
+  color: #ffffff !important;
+}
+
+/* Fix loading spinner text */
+body.dark ion-loading .loading-content {
+  color: #ffffff !important;
+}
+
+body.dark ion-loading div {
+  color: #ffffff !important;
+}
+
+/* Force loading message visibility */
+body.dark .loading-wrapper .loading-content {
+  color: #ffffff !important;
+}
+
+/* Custom loading class for better dark mode support */
+.custom-loading {
+  --color: #ffffff;
+  color: #ffffff;
+}
+
+body.dark .custom-loading {
+  --color: #ffffff !important;
+  --background: rgba(18, 18, 18, 0.9) !important;
+}
+
+body.dark .custom-loading .loading-wrapper {
+  color: #ffffff !important;
+}
+
+body.dark .custom-loading .loading-content {
+  color: #ffffff !important;
+}
+
+body.dark .custom-loading div {
+  color: #ffffff !important;
+}
+
+/* Additional fallback for loading text */
+body.dark ion-loading.custom-loading * {
+  color: #ffffff !important;
+}
