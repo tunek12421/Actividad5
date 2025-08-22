@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   IonCard,
   IonCardContent,
   IonCardHeader,
-  IonCardTitle
+  IonCardTitle,
+  IonSegment,
+  IonSegmentButton,
+  IonLabel
 } from '@ionic/react';
 import {
   Chart as ChartJS,
@@ -50,17 +53,76 @@ const HourlyChart: React.FC<HourlyChartProps> = ({ hourlyData }) => {
     return null;
   }
 
-  // Get next 24 hours of data (8 data points, each 3 hours apart)
-  const next24Hours = hourlyData.list.slice(0, 8);
+  // Target hours: 10am, 1pm, 4pm, 7pm, 10pm, 1am, 4am, 7am (next day)
+  const targetHours = [10, 13, 16, 19, 22, 25, 28, 31]; // Using 24+ for next day hours
+  
+  // Function to find closest forecast for target hour
+  const findClosestForecast = (targetHour: number) => {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    
+    // Handle hours beyond 24 (next day)
+    const actualHour = targetHour > 24 ? targetHour - 24 : targetHour;
+    const daysToAdd = targetHour > 24 ? 1 : 0;
+    
+    const targetDate = new Date(today);
+    targetDate.setDate(targetDate.getDate() + daysToAdd);
+    targetDate.setHours(actualHour, 0, 0, 0);
+    
+    // If the target time is in the past for today, move to tomorrow
+    if (targetDate.getTime() < now.getTime() && daysToAdd === 0) {
+      targetDate.setDate(targetDate.getDate() + 1);
+    }
+    
+    const targetTimestamp = targetDate.getTime() / 1000;
+    
+    // Find closest forecast to target time
+    let closest = hourlyData.list[0];
+    let minDiff = Math.abs(closest.dt - targetTimestamp);
+    
+    for (const forecast of hourlyData.list) {
+      const diff = Math.abs(forecast.dt - targetTimestamp);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closest = forecast;
+      }
+    }
+    
+    return closest;
+  };
+
+  // Get forecasts for specific hours
+  const selectedForecasts = targetHours.map(hour => findClosestForecast(hour));
 
   // Prepare data for chart
-  const labels = next24Hours.map(item => {
-    const date = new Date(item.dt * 1000);
-    return date.getHours() + ':00';
+  const labels = targetHours.map(hour => {
+    // Handle next day hours (25, 28, 31)
+    const displayHour = hour > 24 ? hour - 24 : hour;
+    
+    switch (displayHour) {
+      case 1:
+        return '1:00 AM';
+      case 4:
+        return '4:00 AM';
+      case 7:
+        return '7:00 AM';
+      case 10:
+        return '10:00 AM';
+      case 13:
+        return '1:00 PM';
+      case 16:
+        return '4:00 PM';
+      case 19:
+        return '7:00 PM';
+      case 22:
+        return '10:00 PM';
+      default:
+        return displayHour + ':00';
+    }
   });
 
-  const temperatures = next24Hours.map(item => Math.round(item.main.temp));
-  const feelsLike = next24Hours.map(item => Math.round(item.main.feels_like));
+  const temperatures = selectedForecasts.map(item => Math.round(item.main.temp));
+  const feelsLike = selectedForecasts.map(item => Math.round(item.main.feels_like));
 
   const data = {
     labels,
@@ -182,7 +244,7 @@ const HourlyChart: React.FC<HourlyChartProps> = ({ hourlyData }) => {
   return (
     <IonCard>
       <IonCardHeader>
-        <IonCardTitle>Temperatura por Horas (Próximas 24h)</IonCardTitle>
+        <IonCardTitle>Temperatura en Horas Específicas</IonCardTitle>
       </IonCardHeader>
       <IonCardContent>
         <div style={{ height: '300px', position: 'relative' }}>

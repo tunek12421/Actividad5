@@ -11,7 +11,7 @@ import {
   IonToast,
   IonIcon
 } from '@ionic/react';
-import { search, thermometer, water, location, sunny, rainy, cloudy, snow, thunderstorm, partlySunny, eye, speedometer, navigate } from 'ionicons/icons';
+import { search, water, location, eye, speedometer, navigate } from 'ionicons/icons';
 import { WeatherService } from '../services/weatherService';
 import { WeatherData, ForecastData, HourlyForecastData } from '../types/weather';
 import ForecastCard from './ForecastCard';
@@ -51,15 +51,54 @@ const WeatherCard: React.FC = () => {
     });
   };
 
-  const getWeatherIcon = (weatherMain: string) => {
-    switch (weatherMain.toLowerCase()) {
-      case 'clear': return sunny;
-      case 'clouds': return cloudy;
-      case 'rain': case 'drizzle': return rainy;
-      case 'snow': return snow;
-      case 'thunderstorm': return thunderstorm;
-      case 'mist': case 'fog': case 'haze': return partlySunny;
-      default: return sunny;
+  const getWeatherEmoji = (weatherMain: string, description: string) => {
+    const weather = weatherMain.toLowerCase();
+    const desc = description.toLowerCase();
+    
+    switch (weather) {
+      case 'clear':
+        return '☀️';
+      case 'clouds':
+        if (desc.includes('few clouds')) return '🌤️';
+        if (desc.includes('scattered clouds')) return '⛅';
+        if (desc.includes('broken clouds') || desc.includes('overcast')) return '☁️';
+        return '☁️';
+      case 'rain':
+        if (desc.includes('light rain')) return '🌦️';
+        if (desc.includes('moderate rain')) return '🌧️';
+        if (desc.includes('heavy rain') || desc.includes('very heavy rain')) return '⛈️';
+        if (desc.includes('shower')) return '🌦️';
+        return '🌧️';
+      case 'drizzle':
+        return '🌦️';
+      case 'snow':
+        if (desc.includes('light snow')) return '🌨️';
+        if (desc.includes('heavy snow')) return '❄️';
+        if (desc.includes('sleet')) return '🌨️';
+        return '🌨️';
+      case 'thunderstorm':
+        if (desc.includes('light thunderstorm')) return '⛈️';
+        if (desc.includes('heavy thunderstorm')) return '⛈️';
+        if (desc.includes('ragged thunderstorm')) return '⛈️';
+        return '⛈️';
+      case 'mist':
+        return '🌫️';
+      case 'fog':
+        return '🌫️';
+      case 'haze':
+        return '😶‍🌫️';
+      case 'dust':
+        return '💨';
+      case 'sand':
+        return '💨';
+      case 'ash':
+        return '🌋';
+      case 'squall':
+        return '💨';
+      case 'tornado':
+        return '🌪️';
+      default:
+        return '🌤️';
     }
   };
 
@@ -276,7 +315,7 @@ const WeatherCard: React.FC = () => {
           <IonCardContent>
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: '4rem', margin: '20px 0' }}>
-                <IonIcon icon={getWeatherIcon(weatherData.weather[0].main)} style={{ color: '#3880ff' }} />
+                {getWeatherEmoji(weatherData.weather[0].main, weatherData.weather[0].description)}
               </div>
               <div style={{ fontSize: '3rem', fontWeight: 'bold', margin: '16px 0' }}>
                 {Math.round(weatherData.main.temp)}°C
