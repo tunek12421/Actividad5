@@ -1,97 +1,109 @@
-# Weather App 🌤️
+# Weather App - Actividad 5
 
-Aplicación móvil híbrida para consultar el clima mundial con funcionalidades avanzadas.
+Aplicación móvil híbrida que consume la API de OpenWeatherMap para mostrar información meteorológica. Proyecto desarrollado como parte de la actividad académica para demostrar el consumo de APIs externas y manejo de datos JSON en aplicaciones móviles.
 
-## 📱 Descargar APK
+## Objetivo de la Actividad
 
-**[⬇️ Descargar Weather App v1.0.0](https://github.com/tunek12421/Actividad5/actions/runs/17155748248/artifacts/3828334043)**
+Desarrollar una aplicación que se conecte a una API externa pública, realice peticiones HTTP y muestre los datos en la interfaz de usuario.
 
-### Instalación en Android:
-1. Descarga el archivo ZIP desde el enlace de arriba
-2. Descomprime el archivo `weather-app-debug.apk`
-3. En Android: Configuración → Seguridad → Permitir "Fuentes desconocidas"
-4. Instala el APK
-5. ¡Disfruta tu app del clima!
+## Acceso a la Aplicación
 
-## ✨ Funcionalidades Principales
+### Web Application (Vercel)
+**[Probar en navegador](https://actividad5-opal.vercel.app/)**
 
-### 🔍 Búsqueda de Clima
-- Busca el clima de cualquier ciudad del mundo
-- Resultados en tiempo real con API de OpenWeatherMap
-- Manejo de errores para ciudades no encontradas
+### Android APK
+**[Descargar APK](https://github.com/tunek12421/Actividad5/actions/runs/17155748248/artifacts/3828334043)**
 
-### 📍 Ubicación Actual
-- Presiona el ícono de ubicación para obtener el clima actual
-- Solicita permisos de ubicación automáticamente
-- GPS integrado con servicios nativos de Android
+#### Instalación en Android:
+1. Descargar el archivo ZIP desde el enlace
+2. Extraer el archivo `weather-app-debug.apk`
+3. Configurar Android: Ajustes > Seguridad > Permitir "Fuentes desconocidas"
+4. Instalar el APK
+5. Ejecutar la aplicación
 
-### 📊 Pronóstico Extendido
-- Pronóstico meteorológico de 5 días
-- Temperaturas máximas y mínimas
-- Descripción detallada del clima
+## Cumplimiento de Requisitos
 
-### 🕐 Historial de Búsquedas
-- Acceso rápido a ciudades consultadas recientemente
-- Chips interactivos para búsquedas frecuentes
-- Almacenamiento local automático
+### Consumo de API Externa
+- Integración con OpenWeatherMap API para obtener datos meteorológicos
+- Peticiones HTTP realizadas mediante fetch API
+- Manejo de respuestas JSON estructuradas
 
-### 📋 Información Detallada
-- Temperatura y sensación térmica
-- Humedad relativa
-- Presión atmosférica
-- Velocidad y dirección del viento
-- Visibilidad actual
+### Interfaz de Usuario
+- Campo de entrada para nombre de ciudad
+- Botón de búsqueda para ejecutar consultas
+- Visualización de temperatura actual
+- Descripción textual de condiciones climáticas
 
-### 🌙 Tema Personalizable
-- Modo claro y oscuro
-- Cambio automático según preferencias del sistema
-- Toggle manual en la barra superior
-- Configuración persistente
+### Manejo de Errores
+- Validación de ciudades no encontradas
+- Manejo de errores de conectividad
+- Notificaciones de error mediante toast messages
+- Validación de campos vacíos
 
-## 🎮 Cómo Usar la App
+## Funcionalidades Implementadas
 
-### Búsqueda Básica
-1. Abre la aplicación
-2. Escribe el nombre de una ciudad en el campo de búsqueda
-3. Presiona "Buscar" o Enter
-4. Ve los resultados instantáneamente
+### Funcionalidades Requeridas
+- **Búsqueda por ciudad**: Permite ingresar nombre de ciudad y obtener datos climáticos
+- **Visualización de datos**: Muestra temperatura y descripción del clima
+- **Manejo de errores**: Implementa casos de error para ciudades inexistentes y problemas de red
 
-### Ubicación Actual  
-1. Presiona el ícono 📍 junto al botón de búsqueda
-2. Permite permisos de ubicación cuando se solicite
-3. Espera mientras se obtiene tu ubicación
-4. Ve el clima de tu área automáticamente
+### Funcionalidades Adicionales
+- **Geolocalización**: Obtención de clima basado en ubicación GPS del dispositivo
+- **Pronóstico extendido**: Datos meteorológicos de 5 días
+- **Historial de búsquedas**: Almacenamiento local de consultas recientes
+- **Información detallada**: Humedad, presión atmosférica, velocidad del viento, visibilidad
+- **Temas dinámicos**: Modo claro y oscuro con persistencia de configuración
 
-### Búsquedas Rápidas
-1. Usa los chips de "Búsquedas Recientes" para acceso rápido
-2. Elimina ciudades del historial presionando la ✕
-3. El historial se guarda automáticamente
+## Instrucciones de Uso
 
-### Cambio de Tema
-1. Presiona el ícono 🌙/☀️ en la esquina superior derecha
-2. Alterna entre modo claro y oscuro
-3. La configuración se guarda automáticamente
+### Búsqueda Básica de Clima
+1. Ejecutar la aplicación
+2. Ingresar nombre de ciudad en el campo de texto
+3. Presionar botón "Buscar" o tecla Enter
+4. Visualizar temperatura y descripción del clima
 
-## 🛠️ Tecnologías Utilizadas
+### Funcionalidades Avanzadas
+1. **Ubicación GPS**: Presionar icono de ubicación para obtener clima local
+2. **Historial**: Seleccionar ciudades recientes desde los chips superiores
+3. **Pronóstico**: Revisar datos meteorológicos de los próximos 5 días
+4. **Temas**: Alternar entre modo claro y oscuro usando el icono superior
 
-- **Ionic React** - Framework híbrido multiplataforma
-- **Capacitor** - Bridge nativo para Android/iOS  
-- **TypeScript** - Lenguaje tipado para mayor robustez
-- **Vite** - Build tool moderno y rápido
-- **OpenWeatherMap API** - Datos meteorológicos precisos
-- **CSS Variables** - Theming dinámico
-- **LocalStorage** - Persistencia de datos local
+## Tecnologías Implementadas
 
-## ⚠️ Requisitos del Sistema
+### Framework y Lenguajes
+- **Ionic React**: Framework híbrido para aplicaciones móviles multiplataforma
+- **TypeScript**: Lenguaje de programación tipado para desarrollo robusto
+- **HTML/CSS**: Estructura y estilos de la interfaz de usuario
 
-- Android 6.0 (API 23) o superior
-- Conexión a Internet para consultas de clima
-- Permisos de ubicación (opcional, para GPS)
-- ~4MB de espacio de almacenamiento
+### Herramientas de Desarrollo
+- **Vite**: Build tool para compilación y optimización
+- **Capacitor**: Plataforma para deployment nativo en Android/iOS
+- **Node.js**: Entorno de ejecución para desarrollo
 
-## 🔧 Para Desarrolladores
+### APIs y Servicios
+- **OpenWeatherMap API**: Servicio externo para datos meteorológicos
+- **Fetch API**: Cliente HTTP para peticiones a servicios web
+- **Geolocation API**: Servicios de ubicación GPS del dispositivo
 
-### Instalación Local
+### Almacenamiento y Estado
+- **LocalStorage**: Persistencia de datos en el cliente
+- **React Hooks**: Manejo de estado y efectos en componentes
+
+## Requisitos del Sistema
+
+### Para Ejecución Web
+- Navegador web moderno con soporte ES2020
+- Conexión a Internet activa
+
+### Para Android APK
+- Android 6.0 (API Level 23) o superior
+- Conexión a Internet para consultas meteorológicas
+- Permisos de ubicación (opcional para GPS)
+- Aproximadamente 4MB de espacio libre
+
+## Información Técnica
+
+### Instalación para Desarrollo
 ```bash
 git clone https://github.com/tunek12421/Actividad5.git
 cd Actividad5
@@ -99,25 +111,37 @@ npm install
 npm start
 ```
 
-### Generar APK
+### Compilación de APK
 ```bash
 npm run build
 npx cap sync android
 cd android && ./gradlew assembleDebug
 ```
 
-### API Key
-La app incluye una API key funcional. Para usar tu propia key:
-1. Registrarse en [OpenWeatherMap](https://openweathermap.org/api)  
-2. Editar `src/services/weatherService.ts`
-3. Reemplazar la API_KEY existente
+### Configuración de API
+La aplicación incluye una API key funcional de OpenWeatherMap. Para configurar una clave personalizada:
+1. Registrarse en OpenWeatherMap API
+2. Editar el archivo `src/services/weatherService.ts`
+3. Reemplazar la variable API_KEY con la clave personal
 
-## 📞 Soporte
+## Estructura del Proyecto
 
-Para reportar bugs o sugerir mejoras:
-- **Issues:** [GitHub Issues](https://github.com/tunek12421/Actividad5/issues)
-- **Repositorio:** [GitHub Repo](https://github.com/tunek12421/Actividad5)
+```
+src/
+├── components/
+│   ├── WeatherCard.tsx         # Componente principal de búsqueda
+│   ├── ForecastCard.tsx        # Componente de pronóstico extendido
+│   └── RecentSearches.tsx      # Componente de historial de búsquedas
+├── services/
+│   └── weatherService.ts       # Servicio para consumo de API
+├── types/
+│   └── weather.ts              # Definiciones TypeScript
+├── App.tsx                     # Componente raíz de la aplicación
+└── main.tsx                    # Punto de entrada principal
+```
 
----
+## Recursos de Soporte
 
-**Desarrollado con ❤️ usando Ionic React y Claude Code**
+- **Repositorio GitHub**: [https://github.com/tunek12421/Actividad5](https://github.com/tunek12421/Actividad5)
+- **Aplicación Web**: [https://actividad5-opal.vercel.app/](https://actividad5-opal.vercel.app/)
+- **Issues y Bugs**: [GitHub Issues](https://github.com/tunek12421/Actividad5/issues)
